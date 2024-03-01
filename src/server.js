@@ -4,6 +4,7 @@ let portNum = 4040;
 const WebSocket = require('ws');
 console.log("SERVER.JS started");
 const wss = new WebSocket.Server({ port: portNum });
+console.log(String(wss.url));
 //wss.on("open", function() {
 console.log(String(wss != null));
   console.log("Running on port "+String(portNum));
