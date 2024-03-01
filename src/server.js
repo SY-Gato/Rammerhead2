@@ -1,17 +1,32 @@
 let ip = "127.0.0.1";
 let port = 4040;
 
-var http = require('http'),  
-httpProxy = require('http-proxy');
-// This listens on port 8000 for incoming HTTP requests 
-// and proxies them to port 9000
-httpProxy.createServer(port, ip).listen(8000);
+var url = require('url');
+var WebSocket = require('ws');
+var HttpsProxyAgent = require('https-proxy-agent');
 
-//
-// ...and a simple http server to show us our request back.
-//
-http.createServer(function (req, res) {  
-  res.writeHead(200, { 'Content-Type': 'text/plain' });
-  res.write('request successfully proxied!' + '\n' + JSON.stringify(req.headers, true, 2));
-  res.end();
-}).listen(port);
+// HTTP/HTTPS proxy to connect to
+var proxy = "http://127.0.0.1:4040"; //'http://168.63.76.32:3128';
+console.log('using proxy server %j', proxy);
+
+// WebSocket endpoint for the proxy to connect to
+var endpoint = 'ws://echo.websocket.org';
+console.log('attempting to connect to WebSocket %j', endpoint);
+
+// create an instance of the `HttpsProxyAgent` class with the proxy server information
+var options = url.parse(proxy);
+
+var agent = new HttpsProxyAgent(options);
+
+// finally, initiate the WebSocket connection
+var socket = new WebSocket(endpoint, { agent: agent });
+
+socket.on('open', function () {
+  console.log('"open" event!');
+  socket.send('hello world');
+});
+
+socket.on('message', function (data, flags) {
+  console.log('"message" event! %j %j', data, flags);
+  socket.close();
+});
