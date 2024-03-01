@@ -19,6 +19,7 @@
         let i = document.getElementById("inp").value;
       }
       function c() {
+        try {
         socket = new WebSocket(wssUrl);
         socket.onopen = (event) => {
           socket.send("Hello!");
@@ -27,6 +28,9 @@
           console.log(event.data);
           alert(event.data);
         };
+        } catch (Exception e) {
+          console.log(e);
+        }
       }
     </script>
   </body>
