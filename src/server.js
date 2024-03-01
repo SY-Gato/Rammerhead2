@@ -1,7 +1,7 @@
 let ip = "127.0.0.1";
 let portNum = 4040;
 
-import { WebSocketServer } from 'ws';
+const { WebSocketServer } = require('ws');
 
 const wss = new WebSocketServer({ port: portNum });
 
