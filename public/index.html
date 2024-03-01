@@ -8,25 +8,25 @@
     <button id="b" onclick="cl()">
       Send
     </button>
+    <button id="b2" onclick="c()">
+      Connect
+    </button>
     <script>
+      const WebSocket = require("ws");
+      const wssUrl = "wss://127.0.0.1:4040";
+      let socket;
       function cl() {
-        let i = document.getElementById("inp").innerHTML;
-        const xhr = new XMLHttpRequest();
-xhr.open("POST", "");
-xhr.setRequestHeader("Content-Type", "application/json; charset=UTF-8");
-const body = JSON.stringify({
-  userId: 1,
-  title: "Fix my bugs",
-  completed: false
-});
-xhr.onload = () => {
-  if (xhr.readyState == 4 && xhr.status == 201) {
-    console.log(JSON.parse(xhr.responseText));
-  } else {
-    console.log(`Error: ${xhr.status}`);
-  }
-};
-xhr.send(body);
+        let i = document.getElementById("inp").value;
+      }
+      function c() {
+        socket = new WebSocket(wssUrl);
+        socket.onopen = (event) => {
+          socket.send("Hello!");
+        }
+        exampleSocket.onmessage = (event) => {
+          console.log(event.data);
+          alert(event.data);
+        };
       }
     </script>
   </body>
