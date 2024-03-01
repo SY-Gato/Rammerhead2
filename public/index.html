@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Send Info</title>
+  </head>
+  <body>
+    <input id="inp" spellcheck="off" placeholder="Data..."></input>
+    <button id="b" onclick="cl()">
+      Send
+    </button>
+    <script>
+      function cl() {
+        let i = document.getElementById("inp").innerHTML;
+        const xhr = new XMLHttpRequest();
+xhr.open("POST", "");
+xhr.setRequestHeader("Content-Type", "application/json; charset=UTF-8");
+const body = JSON.stringify({
+  userId: 1,
+  title: "Fix my bugs",
+  completed: false
+});
+xhr.onload = () => {
+  if (xhr.readyState == 4 && xhr.status == 201) {
+    console.log(JSON.parse(xhr.responseText));
+  } else {
+    console.log(`Error: ${xhr.status}`);
+  }
+};
+xhr.send(body);
+      }
+    </script>
+  </body>
+</html>
