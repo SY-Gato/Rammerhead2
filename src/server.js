@@ -1,7 +1,7 @@
 let ip = "127.0.0.1";
 let portNum = 4040;
 
-const { WebSocketServer } = require('ws');
+const WebSocket = require('ws');
 console.log("SERVER.JS started");
 const wss = new WebSocketServer({ port: portNum });
 //wss.on("open", function() {
